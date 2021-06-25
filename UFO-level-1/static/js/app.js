@@ -48,21 +48,24 @@ function runFilter() {
 }
 
 function runAll() {
-    // d3.event.preventDefault();
-
-    var inputElement = d3.select("#datetime");
-
-    var inputValue = inputElement.property("value");
-
-    console.log(inputValue);
+    console.log(`Returning all values`);
+    console.log(tableData);
+    var ufoTbody = d3.select("#ufo-tbody");
+    ufoTbody.html("");
+    tableData.forEach(ufo => {
+        var row = ufoTbody.append("tr");
+        row.append("td").text(ufo.datetime);
+        row.append("td").text(ufo.city);
+        row.append("td").text(ufo.state);
+        row.append("td").text(ufo.country);
+        row.append("td").text(ufo.shape);
+        row.append("td").text(ufo.durationMinutes);
+        row.append("td").text(ufo.comments);
+    })
 }
 
 function runClear() {
-    // d3.event.preventDefault();
-
-    var inputElement = d3.select("#datetime");
-
-    var inputValue = inputElement.property("value");
-
-    console.log(inputValue);
+    console.log(`Clear screen`);
+    var ufoTbody = d3.select("#ufo-tbody");
+    ufoTbody.html("");
 }
