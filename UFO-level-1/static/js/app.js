@@ -6,6 +6,7 @@ var form = d3.select("#filters");
 var filterButton = d3.select("#filter-btn");
 var allButton = d3.select("#all-btn");
 var clearButton = d3.select("#clear-btn");
+var stateDropdown = d3.select("#state-dropdown")
 
 // Event handlers
 form.on("submit", runFilter);
