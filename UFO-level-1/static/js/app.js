@@ -44,6 +44,20 @@ function runFilter() {
         console.log(`Not found`);
         var ufoTbody = d3.select("#ufo-tbody");
         ufoTbody.html("");
+        ufoTbody.append("h3").text(`The date selected ( ${inputValue} ) was not found. Please try the following dates:`);
+        var firstOne = 0;
+        var lastOne = 0;
+        tableData.forEach(ufo => {
+            firstOne += 1;
+            if ( firstOne === 1 ) {
+                ufoTbody.append("h5").text(ufo.datetime);
+            } else {
+                if ( lastOne !== ufo.datetime ) {
+                    ufoTbody.append("h5").text(ufo.datetime);
+                } 
+            }
+            lastOne = ufo.datetime;
+        })
     }
 }
 
@@ -69,3 +83,7 @@ function runClear() {
     var ufoTbody = d3.select("#ufo-tbody");
     ufoTbody.html("");
 }
+
+tableData.forEach(ufo => {
+
+})
