@@ -84,6 +84,3 @@ function runClear() {
     ufoTbody.html("");
 }
 
-tableData.forEach(ufo => {
-
-})
