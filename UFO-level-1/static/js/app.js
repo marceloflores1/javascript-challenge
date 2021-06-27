@@ -13,6 +13,7 @@ form.on("submit", runFilter);
 filterButton.on("click", runFilter);
 allButton.on("click", runAll);
 clearButton.on("click", runClear);
+stateDropdown.on("click", runStates)
 
 
 // Function runFilter
@@ -52,10 +53,8 @@ function runFilter() {
             firstOne += 1;
             if ( firstOne === 1 ) {
                 ufoTbody.append("h5").text(ufo.datetime);
-            } else {
-                if ( lastOne !== ufo.datetime ) {
-                    ufoTbody.append("h5").text(ufo.datetime);
-                } 
+            } else if ( lastOne !== ufo.datetime ) {
+                ufoTbody.append("h5").text(ufo.datetime);
             }
             lastOne = ufo.datetime;
         })
@@ -85,3 +84,36 @@ function runClear() {
     ufoTbody.html("");
 }
 
+function runStates() {
+    console.log(`Filtering by state`);
+    var selectedState = stateDropdown.text();
+    var filteredState = tableData.filter(ufo => (ufo.state === selectedState))
+    console.log(filteredState);
+    var ufoTbody = d3.select("#ufo-tbody");
+    ufoTbody.html("");
+    filteredState.forEach(ufo => {
+        var row = ufoTbody.append("tr");
+        row.append("td").text(ufo.datetime);
+        row.append("td").text(ufo.city);
+        row.append("td").text(ufo.state);
+        row.append("td").text(ufo.country);
+        row.append("td").text(ufo.shape);
+        row.append("td").text(ufo.durationMinutes);
+        row.append("td").text(ufo.comments);
+    })
+    
+}
+
+// Adding dropdown list for states
+
+var firstOne = 0;
+var lastOne = 0;
+tableData.forEach(ufo => {
+    firstOne += 1;
+    if ( firstOne === 1 ) {
+        stateDropdown.append("li").text(ufo.state);
+    } else if ( lastOne !== ufo.state ) {
+        stateDropdown.append("li").text(ufo.state);
+    }
+    lastOne = ufo.state;
+})
