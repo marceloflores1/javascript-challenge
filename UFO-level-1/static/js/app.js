@@ -12,7 +12,6 @@ var countryDropdown = d3.select("#country-dropdown");
 var shapeDropdown = d3.select("#shape-dropdown");
 
 // Adding dropdown lists
-
 var cities = tableData.map(ufo => ufo.city);
 var uniqueCities = cities.filter(uniqueFilter).sort();
 uniqueCities.forEach(cityName => {
