@@ -14,38 +14,38 @@ var shapeDropdown = d3.select("#shape-dropdown");
 // Adding dropdown lists
 
 var cities = tableData.map(ufo => ufo.city);
-var uniqueCities = cities.filter(onlyUnique).sort();
+var uniqueCities = cities.filter(uniqueFilter).sort();
 uniqueCities.forEach(cityName => {
     cityDropdown.append("li").append("a").attr("id", "city-dropdown-item").text(cityName);
 });
 
 var states = tableData.map(ufo => ufo.state);
-var uniqueStates = states.filter(onlyUnique).sort();
+var uniqueStates = states.filter(uniqueFilter).sort();
 uniqueStates.forEach(stateName => {
     stateDropdown.append("li").append("a").attr("id", "state-dropdown-item").text(stateName);
 });
 
 var countries = tableData.map(ufo => ufo.country);
-var uniqueCountries = countries.filter(onlyUnique).sort();
+var uniqueCountries = countries.filter(uniqueFilter).sort();
 uniqueCountries.forEach(countryName => {
     countryDropdown.append("li").append("a").attr("id", "country-dropdown-item").text(countryName);
 });
 
 var shapes = tableData.map(ufo => ufo.shape);
-var uniqueShapes = shapes.filter(onlyUnique).sort();
+var uniqueShapes = shapes.filter(uniqueFilter).sort();
 uniqueShapes.forEach(shapeName => {
     shapeDropdown.append("li").append("a").attr("id", "shape-dropdown-item").text(shapeName);
 });
 
-// Selecting 
+// Selecting all
 var cityDropdownItem = d3.selectAll("#city-dropdown-item");
 var stateDropdownItem = d3.selectAll("#state-dropdown-item");
 var countryDropdownItem = d3.selectAll("#country-dropdown-item");
 var shapeDropdownItem = d3.selectAll("#shape-dropdown-item");
 
 // Event handlers
-form.on("submit", runFilter);
-filterButton.on("click", runFilter);
+form.on("submit", runDate);
+filterButton.on("click", runDate);
 allButton.on("click", runAll);
 clearButton.on("click", runClear);
 cityDropdownItem.on("click", runCities)
@@ -54,33 +54,18 @@ countryDropdownItem.on("click", runCountries)
 shapeDropdownItem.on("click", runShapes)
 
 // Adding functions 
-
-function runFilter() {
+function runDate() {
     // d3.event.preventDefault();
     var inputElement = d3.select("#datetime");
     var inputValue = inputElement.property("value");
-    console.log(inputValue);
     var filteredUfo = tableData.filter(date => (date.datetime === inputValue));
     if ( filteredUfo.length !== 0 ) {
-        console.log(filteredUfo);
         clearFilters();
         filterButton.attr("class", "btn-info");
-        var ufoTbody = d3.select("#ufo-tbody");
-        ufoTbody.html("");
-        filteredUfo.forEach(ufo => {
-            var row = ufoTbody.append("tr");
-            row.append("td").text(ufo.datetime);
-            row.append("td").text(ufo.city);
-            row.append("td").text(ufo.state);
-            row.append("td").text(ufo.country);
-            row.append("td").text(ufo.shape);
-            row.append("td").text(ufo.durationMinutes);
-            row.append("td").text(ufo.comments);
-        })
+        dataPrinter(filteredUfo);
     } else {
         clearFilters();
         filterButton.attr("class", "btn-danger");
-        console.log(`Not found`);
         var ufoTbody = d3.select("#ufo-tbody");
         ufoTbody.html("");
         ufoTbody.append("h3").text(`The date selected ( ${inputValue} ) was not found. Please try the following dates:`);
@@ -99,128 +84,54 @@ function runFilter() {
 };
 
 function runAll() {
-    console.log(`Returning all values`);
-    console.log(tableData);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
-    tableData.forEach(ufo => {
-        var row = ufoTbody.append("tr");
-        row.append("td").text(ufo.datetime);
-        row.append("td").text(ufo.city);
-        row.append("td").text(ufo.state);
-        row.append("td").text(ufo.country);
-        row.append("td").text(ufo.shape);
-        row.append("td").text(ufo.durationMinutes);
-        row.append("td").text(ufo.comments);
-    })
+    dataPrinter(tableData);
     clearFilters();
     allButton.attr("class", "btn-info");
 };
 
 function runClear() {
-    console.log(`Clear screen`);
     var ufoTbody = d3.select("#ufo-tbody");
     ufoTbody.html("");
     clearFilters();
 };
 
 function runCities() {
-    console.log(`Filtering by city`);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
     var inputSelected = d3.select(this);
     var selectedCity = inputSelected.text();
-    var filteredCity = tableData.filter(ufo => (ufo.city === selectedCity))
-    console.log(selectedCity);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
-    filteredCity.forEach(ufo => {
-        var row = ufoTbody.append("tr");
-        row.append("td").text(ufo.datetime);
-        row.append("td").text(ufo.city);
-        row.append("td").text(ufo.state);
-        row.append("td").text(ufo.country);
-        row.append("td").text(ufo.shape);
-        row.append("td").text(ufo.durationMinutes);
-        row.append("td").text(ufo.comments);
-    })  
+    var filteredCity = tableData.filter(ufo => (ufo.city === selectedCity));
+    dataPrinter(filteredCity);
     clearFilters();
     d3.select("#city-button").text(selectedCity).style("text-transform", "capitalize").attr("class", "btn-info");
 };
 
 function runStates() {
-    console.log(`Filtering by state`);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
     var inputSelected = d3.select(this);
     var selectedState = inputSelected.text();
-    var filteredState = tableData.filter(ufo => (ufo.state === selectedState))
-    console.log(selectedState);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
-    filteredState.forEach(ufo => {
-        var row = ufoTbody.append("tr");
-        row.append("td").text(ufo.datetime);
-        row.append("td").text(ufo.city);
-        row.append("td").text(ufo.state);
-        row.append("td").text(ufo.country);
-        row.append("td").text(ufo.shape);
-        row.append("td").text(ufo.durationMinutes);
-        row.append("td").text(ufo.comments);
-    })    
+    var filteredState = tableData.filter(ufo => (ufo.state === selectedState));
+    dataPrinter(filteredState);
     clearFilters();
     d3.select("#state-button").text(selectedState).style("text-transform", "capitalize").attr("class", "btn-info");
 };
 
 function runCountries() {
-    console.log(`Filtering by country`);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
     var inputSelected = d3.select(this);
     var selectedCountry = inputSelected.text();
-    var filteredCountry = tableData.filter(ufo => (ufo.country === selectedCountry))
-    console.log(selectedCountry);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
-    filteredCountry.forEach(ufo => {
-        var row = ufoTbody.append("tr");
-        row.append("td").text(ufo.datetime);
-        row.append("td").text(ufo.city);
-        row.append("td").text(ufo.state);
-        row.append("td").text(ufo.country);
-        row.append("td").text(ufo.shape);
-        row.append("td").text(ufo.durationMinutes);
-        row.append("td").text(ufo.comments);
-    })    
+    var filteredCountry = tableData.filter(ufo => (ufo.country === selectedCountry));
+    dataPrinter(filteredCountry);
     clearFilters();
     d3.select("#country-button").text(selectedCountry).style("text-transform", "capitalize").attr("class", "btn-info");
 };
 
 function runShapes() {
-    console.log(`Filtering by shape`);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
     var inputSelected = d3.select(this);
     var selectedShape = inputSelected.text();
-    var filteredShape = tableData.filter(ufo => (ufo.shape === selectedShape))
-    console.log(selectedShape);
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
-    filteredShape.forEach(ufo => {
-        var row = ufoTbody.append("tr");
-        row.append("td").text(ufo.datetime);
-        row.append("td").text(ufo.city);
-        row.append("td").text(ufo.state);
-        row.append("td").text(ufo.country);
-        row.append("td").text(ufo.shape);
-        row.append("td").text(ufo.durationMinutes);
-        row.append("td").text(ufo.comments);
-    })    
+    var filteredShape = tableData.filter(ufo => (ufo.shape === selectedShape));
+    dataPrinter(filteredShape);
     clearFilters();
     d3.select("#shape-button").text(selectedShape).style("text-transform", "capitalize").attr("class", "btn-info");
 };
 
-function onlyUnique(value, index, self) {
+function uniqueFilter(value, index, self) {
     return self.indexOf(value) === index;
 };
 
@@ -234,4 +145,20 @@ function clearFilters() {
     clearButton.attr("class", "btn-default");
 };
 
+function dataPrinter(list) {
+    var ufoTbody = d3.select("#ufo-tbody");
+    ufoTbody.html("");
+    list.forEach(ufo => {
+        var row = ufoTbody.append("tr");
+        row.append("td").text(ufo.datetime);
+        row.append("td").text(ufo.city);
+        row.append("td").text(ufo.state);
+        row.append("td").text(ufo.country);
+        row.append("td").text(ufo.shape);
+        row.append("td").text(ufo.durationMinutes);
+        row.append("td").text(ufo.comments);
+    })    
+};
+
 clearFilters();
+
