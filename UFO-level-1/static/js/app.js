@@ -88,7 +88,7 @@ function runStates() {
     console.log(`Filtering by state`);
     var selectedState = stateDropdown.text();
     var filteredState = tableData.filter(ufo => (ufo.state === selectedState))
-    console.log(filteredState);
+    console.log(selectedState);
     var ufoTbody = d3.select("#ufo-tbody");
     ufoTbody.html("");
     filteredState.forEach(ufo => {
@@ -108,12 +108,13 @@ function runStates() {
 
 var firstOne = 0;
 var lastOne = 0;
+//var stateList = stateDropdown.append("li")
 tableData.forEach(ufo => {
     firstOne += 1;
     if ( firstOne === 1 ) {
-        stateDropdown.append("li").text(ufo.state);
+        stateDropdown.append("li").append("a").text(ufo.state).property("class", "dropdown-item");
     } else if ( lastOne !== ufo.state ) {
-        stateDropdown.append("li").text(ufo.state);
+        stateDropdown.append("li").append("a").text(ufo.state).property("class", "dropdown-item");
     }
     lastOne = ufo.state;
 })
