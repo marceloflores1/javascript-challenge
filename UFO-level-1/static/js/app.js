@@ -63,6 +63,8 @@ function runFilter() {
     var filteredUfo = tableData.filter(date => (date.datetime === inputValue));
     if ( filteredUfo.length !== 0 ) {
         console.log(filteredUfo);
+        clearFilters();
+        filterButton.attr("class", "btn-info");
         var ufoTbody = d3.select("#ufo-tbody");
         ufoTbody.html("");
         filteredUfo.forEach(ufo => {
@@ -76,6 +78,8 @@ function runFilter() {
             row.append("td").text(ufo.comments);
         })
     } else {
+        clearFilters();
+        filterButton.attr("class", "btn-danger");
         console.log(`Not found`);
         var ufoTbody = d3.select("#ufo-tbody");
         ufoTbody.html("");
@@ -109,12 +113,15 @@ function runAll() {
         row.append("td").text(ufo.durationMinutes);
         row.append("td").text(ufo.comments);
     })
+    clearFilters();
+    allButton.attr("class", "btn-info");
 };
 
 function runClear() {
     console.log(`Clear screen`);
     var ufoTbody = d3.select("#ufo-tbody");
     ufoTbody.html("");
+    clearFilters();
 };
 
 function runCities() {
@@ -137,7 +144,8 @@ function runCities() {
         row.append("td").text(ufo.durationMinutes);
         row.append("td").text(ufo.comments);
     })  
-    d3.select("#city-button").text(selectedCity);
+    clearFilters();
+    d3.select("#city-button").text(selectedCity).style("text-transform", "capitalize").attr("class", "btn-info");
 };
 
 function runStates() {
@@ -160,6 +168,8 @@ function runStates() {
         row.append("td").text(ufo.durationMinutes);
         row.append("td").text(ufo.comments);
     })    
+    clearFilters();
+    d3.select("#state-button").text(selectedState).style("text-transform", "capitalize").attr("class", "btn-info");
 };
 
 function runCountries() {
@@ -182,6 +192,8 @@ function runCountries() {
         row.append("td").text(ufo.durationMinutes);
         row.append("td").text(ufo.comments);
     })    
+    clearFilters();
+    d3.select("#country-button").text(selectedCountry).style("text-transform", "capitalize").attr("class", "btn-info");
 };
 
 function runShapes() {
@@ -204,9 +216,22 @@ function runShapes() {
         row.append("td").text(ufo.durationMinutes);
         row.append("td").text(ufo.comments);
     })    
+    clearFilters();
+    d3.select("#shape-button").text(selectedShape).style("text-transform", "capitalize").attr("class", "btn-info");
 };
 
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 };
 
+function clearFilters() {
+    d3.select("#city-button").text("City").attr("class", "btn-default");
+    d3.select("#state-button").text("State").attr("class", "btn-default");
+    d3.select("#country-button").text("Country").attr("class", "btn-default");
+    d3.select("#shape-button").text("Shape").attr("class", "btn-default");
+    allButton.attr("class", "btn-default");
+    filterButton.attr("class", "btn-default");
+    clearButton.attr("class", "btn-default");
+};
+
+clearFilters();
