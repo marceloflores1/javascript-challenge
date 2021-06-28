@@ -39,33 +39,38 @@
                     <ul class="list-group" id="filters">
                       <li class="filter list-group-item">
                         <input class="form-control" id="datetime" type="text" placeholder="1/11/2011">
-                        <button id="filter-btn" type="button" class="btn btn-default">Date Filter</button>
                       </li>
+                      <li class="dropdown list-group-item">
+                        <button id="city-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">City
+                        </button>
+                        <ul id="city-dropdown" class="dropdown-menu"></ul>
+                      </li>
+                      <li class="dropdown list-group-item">
+                        <button id="state-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">State
+                        </button>
+                        <ul id="state-dropdown" class="dropdown-menu"></ul>
+                      </li>
+                      <li class="dropdown list-group-item">
+                        <button id="country-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Country
+                        </button>
+                        <ul id="country-dropdown" class="dropdown-menu"></ul>
+                      </li>
+                      <li class="dropdown list-group-item">
+                        <button id="shape-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Shape
+                        </button>
+                        <ul id="shape-dropdown" class="dropdown-menu"></ul>
+                      </li>
+                      <li class="list-group-item">
+                        <button id="filter-btn" type="button" class="btn btn-default">Apply Filters</button>
+                      </li>    
+                      <li class="list-group-item">
+                        <button id="all-btn" type="button" class="btn btn-default">Select All</button>
+                      </li>    
+                      <li class="list-group-item">
+                        <button id="clear-btn" type="button" class="btn btn-default">Clear Data</button>
+                      </li>    
                     </ul>
                   </div>
-                  <!-- This is where I can add different filters -->
-                  <div class="dropdown">
-                    <button id="city-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">City
-                    </button>
-                    <ul id="city-dropdown" class="dropdown-menu"></ul>
-                  </div>
-                  <div class="dropdown">
-                    <button id="state-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">State
-                    </button>
-                    <ul id="state-dropdown" class="dropdown-menu"></ul>
-                  </div>
-                  <div class="dropdown">
-                    <button id="country-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Country
-                    </button>
-                    <ul id="country-dropdown" class="dropdown-menu"></ul>
-                  </div>
-                  <div class="dropdown">
-                    <button id="shape-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Shape
-                    </button>
-                    <ul id="shape-dropdown" class="dropdown-menu"></ul>
-                  </div>
-                  <button id="all-btn" type="button" class="btn btn-default">Select All</button>
-                  <button id="clear-btn" type="button" class="btn btn-default">Clear Data</button>
                 </form>
               </div>
             </div>

@@ -36,18 +36,15 @@ You can handle this... right? The planet Earth needs to know what we have found!
 
 ##### Home Screen
 ![Home Screen](UFO-level-1/static/images/home.png)
-##### Wrong date
-![Wrong Date Screen](UFO-level-1/static/images/wrong_date.png)
-##### Correct date
-![Correct Date Screen](UFO-level-1/static/images/right_date.png)
-##### City
-![City Screen](UFO-level-1/static/images/city.png)
-##### State
-![State Screen](UFO-level-1/static/images/state.png)
-##### Country
-![Country Screen](UFO-level-1/static/images/country.png)
-##### Shape
-![Shape Screen](UFO-level-1/static/images/shape.png)
-##### All
-![All Screen](UFO-level-1/static/images/all.png)
-
+##### Date Filter
+![Date Filter](UFO-level-1/static/images/date.png)
+##### Two Combined Filters
+![Two Combined Filters](UFO-level-1/static/images/twoCombined.png)
+##### Three Combined Filters
+![Three Combined Filters](UFO-level-1/static/images/threeCombined.png)
+##### Select All
+![Select All](UFO-level-1/static/images/all.png)
+##### Catching Error
+![Catching Error](UFO-level-1/static/images/caughtError.png)
+##### Catching Bug
+![Catching Bug](UFO-level-1/static/images/caughtBug.png)

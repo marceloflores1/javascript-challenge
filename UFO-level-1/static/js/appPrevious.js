@@ -2,7 +2,7 @@
 var tableData = data;
 
 // Selecting 
-var dateInput = d3.select("#filters");
+var form = d3.select("#filters");
 var filterButton = d3.select("#filter-btn");
 var allButton = d3.select("#all-btn");
 var clearButton = d3.select("#clear-btn");
@@ -43,8 +43,8 @@ var countryDropdownItem = d3.selectAll("#country-dropdown-item");
 var shapeDropdownItem = d3.selectAll("#shape-dropdown-item");
 
 // Event handlers
-dateInput.on("submit", runFilter);
-filterButton.on("click", runFilter);
+form.on("submit", runDate);
+filterButton.on("click", runDate);
 allButton.on("click", runAll);
 clearButton.on("click", runClear);
 cityDropdownItem.on("click", runCities)
@@ -53,46 +53,39 @@ countryDropdownItem.on("click", runCountries)
 shapeDropdownItem.on("click", runShapes)
 
 // Adding functions 
-function runFilter() {
-  //  d3.event.preventDefault();
-    var textInput = d3.select("#datetime").property("value");
-    var cityInput = d3.select("#city-button").text();
-    var stateInput = d3.select("#state-button").text();
-    var countryInput = d3.select("#country-button").text();
-    var shapeInput = d3.select("#shape-button").text();
-    var filterItems = {"datetime":textInput, "city":cityInput, "state":stateInput, "country":countryInput, "shape":shapeInput};
-    var filteredResults = tableData;
-    Object.entries(filterItems).forEach(([key, value]) => {
-        if (value !== 0 && value !== "" && value !== "City" && value !== "State" && value !== "Country" && value !== "Shape") {
-            filteredResults = filteredResults.filter(ufo => ufo[key] === value);
-        }
-    })
-    if ( filteredResults === tableData) {
-        filterButton.attr("class", "btn-warning");
+function runDate() {
+    // d3.event.preventDefault();
+    var inputElement = d3.select("#datetime");
+    var inputValue = inputElement.property("value");
+    var filteredUfo = tableData.filter(date => (date.datetime === inputValue));
+    if ( filteredUfo.length !== 0 ) {
+        clearFilters();
+        filterButton.attr("class", "btn-info");
+        dataPrinter(filteredUfo);
+    } else {
+        clearFilters();
+        filterButton.attr("class", "btn-danger");
         var ufoTbody = d3.select("#ufo-tbody");
         ufoTbody.html("");
-        ufoTbody.append("h3").text(`It looks like you have not selected any filters...`);    
-        allButton.attr("class", "btn-default");
-    } else if ( filteredResults.length !== 0 ) {
-        filterButton.attr("class", "btn-success");
-        dataPrinter(filteredResults);
-    } else {
-        runError();
+        ufoTbody.append("h3").text(`The date selected ( ${inputValue} ) was not found. Please try the following dates:`);
+        var firstOne = 0;
+        var lastOne = 0;
+        tableData.forEach(ufo => {
+            firstOne += 1;
+            if ( firstOne === 1 ) {
+                ufoTbody.append("h5").text(ufo.datetime);
+            } else if ( lastOne !== ufo.datetime ) {
+                ufoTbody.append("h5").text(ufo.datetime);
+            }
+            lastOne = ufo.datetime;
+        })
     }
 };
-
-function runError() {
-    filterButton.attr("class", "btn-danger");
-    var ufoTbody = d3.select("#ufo-tbody");
-    ufoTbody.html("");
-    ufoTbody.append("h3").text(`There is no data for the filters selected.`);    
-}
 
 function runAll() {
     dataPrinter(tableData);
     clearFilters();
     allButton.attr("class", "btn-info");
-
 };
 
 function runClear() {
@@ -104,29 +97,37 @@ function runClear() {
 function runCities() {
     var inputSelected = d3.select(this);
     var selectedCity = inputSelected.text();
+    var filteredCity = tableData.filter(ufo => (ufo.city === selectedCity));
+    dataPrinter(filteredCity);
+    clearFilters();
     d3.select("#city-button").text(selectedCity).style("text-transform", "capitalize").attr("class", "btn-info");
-    allButton.attr("class", "btn-default");
 };
 
 function runStates() {
     var inputSelected = d3.select(this);
     var selectedState = inputSelected.text();
+    var filteredState = tableData.filter(ufo => (ufo.state === selectedState));
+    dataPrinter(filteredState);
+    clearFilters();
     d3.select("#state-button").text(selectedState).style("text-transform", "capitalize").attr("class", "btn-info");
-    allButton.attr("class", "btn-default");
 };
 
 function runCountries() {
     var inputSelected = d3.select(this);
     var selectedCountry = inputSelected.text();
+    var filteredCountry = tableData.filter(ufo => (ufo.country === selectedCountry));
+    dataPrinter(filteredCountry);
+    clearFilters();
     d3.select("#country-button").text(selectedCountry).style("text-transform", "capitalize").attr("class", "btn-info");
-    allButton.attr("class", "btn-default");
 };
 
 function runShapes() {
     var inputSelected = d3.select(this);
     var selectedShape = inputSelected.text();
+    var filteredShape = tableData.filter(ufo => (ufo.shape === selectedShape));
+    dataPrinter(filteredShape);
+    clearFilters();
     d3.select("#shape-button").text(selectedShape).style("text-transform", "capitalize").attr("class", "btn-info");
-    allButton.attr("class", "btn-default");
 };
 
 function uniqueFilter(value, index, self) {
@@ -141,7 +142,6 @@ function clearFilters() {
     allButton.attr("class", "btn-default");
     filterButton.attr("class", "btn-default");
     clearButton.attr("class", "btn-default");
-    d3.select('#datetime').property("value", "");
 };
 
 function dataPrinter(list) {
