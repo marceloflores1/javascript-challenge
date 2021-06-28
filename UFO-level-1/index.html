@@ -38,12 +38,14 @@
                   <div class="form-group">
                     <ul class="list-group" id="filters">
                       <li class="filter list-group-item">
-                        <input class="form-control" id="datetime" type="text" placeholder="1/11/2011">
+                        Date <input class="form-control" id="datetime" type="text" placeholder="1/11/2011">
                       </li>
-                      <li class="dropdown list-group-item">
-                        <button id="city-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">City
-                        </button>
-                        <ul id="city-dropdown" class="dropdown-menu"></ul>
+                      <li id="country-li" class="list-group-item btn-group" role="group" aria-label="...">
+                        Country
+                        <div>
+                          <button id="us-btn" type="button" class="btn btn-default">US</button>
+                          <button id="ca-btn" type="button" class="btn btn-default">CA</button>
+                        </div>
                       </li>
                       <li class="dropdown list-group-item">
                         <button id="state-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">State
@@ -51,9 +53,9 @@
                         <ul id="state-dropdown" class="dropdown-menu"></ul>
                       </li>
                       <li class="dropdown list-group-item">
-                        <button id="country-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Country
+                        <button id="city-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">City
                         </button>
-                        <ul id="country-dropdown" class="dropdown-menu"></ul>
+                        <ul id="city-dropdown" class="dropdown-menu"></ul>
                       </li>
                       <li class="dropdown list-group-item">
                         <button id="shape-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Shape
@@ -82,16 +84,15 @@
               <thead>
                 <tr>
                   <th class="table-head">Date</th>
-                  <th class="table-head">City</th>
-                  <th class="table-head">State</th>
                   <th class="table-head">Country</th>
+                  <th class="table-head">State</th>
+                  <th class="table-head">City</th>
                   <th class="table-head">Shape</th>
                   <th class="table-head">Duration</th>
                   <th class="table-head">Comments</th>
                 </tr>
               </thead>
               <tbody id="ufo-tbody">
-                <!-- This is where I need to append -->
               </tbody>
             </table>
           </div>
