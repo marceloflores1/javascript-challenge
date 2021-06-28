@@ -1,3 +1,7 @@
 .dropdown {
   text-transform: capitalize;
 }
+
+#thead {
+  background-color: rgb(0, 0, 57);
+}

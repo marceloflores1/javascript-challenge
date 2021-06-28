@@ -2,7 +2,7 @@
 var tableData = data;
 
 // Selecting 
-var dateInput = d3.select("#filters");
+var dateInput = d3.select("#datetime");
 var filterButton = d3.select("#filter-btn");
 var allButton = d3.select("#all-btn");
 var clearButton = d3.select("#clear-btn");
@@ -50,7 +50,7 @@ caButton.on("click", runCountries);
 
 // Adding functions 
 function runFilter() {
-  //  d3.event.preventDefault();
+    d3.event.preventDefault();
     var textInput = d3.select("#datetime").property("value");
     var cityInput = d3.select("#city-button").text();
     var stateInput = d3.select("#state-button").text();
@@ -64,6 +64,7 @@ function runFilter() {
         }
     })
     if ( filteredResults === tableData) {
+        clearFilters();
         filterButton.attr("class", "btn btn-warning");
         var ufoTbody = d3.select("#ufo-tbody");
         ufoTbody.html("");
@@ -78,16 +79,29 @@ function runFilter() {
     }
 };
 
+function printTableHeaders() {
+    d3.select('#thead').html("");
+    var thead = d3.select("#thead").append("tr")
+    thead.append("th").text("Date").attr("class", "table-head");
+    thead.append("th").text("Country").attr("class", "table-head");
+    thead.append("th").text("State").attr("class", "table-head");
+    thead.append("th").text("City").attr("class", "table-head");
+    thead.append("th").text("Shape").attr("class", "table-head");
+    thead.append("th").text("Duration").attr("class", "table-head");
+    thead.append("th").text("Comments").attr("class", "table-head");
+};
+
 function runError() {
+    d3.select('#thead').html("");
     filterButton.attr("class", "btn btn-danger");
     var ufoTbody = d3.select("#ufo-tbody");
     ufoTbody.html("");
     ufoTbody.append("h3").text(`There is no data for the filters selected.`);    
-}
+};
 
 function runAll() {
-    dataPrinter(tableData);
     clearFilters();
+    dataPrinter(tableData);
     allButton.attr("class", "btn btn-info");
 };
 
@@ -142,9 +156,11 @@ function clearFilters() {
     usButton.attr("class", "btn btn-default");
     caButton.attr("class", "btn btn-default");
     countrySelected = "";
+    d3.select('#thead').html("");
 };
 
 function dataPrinter(list) {
+    printTableHeaders();
     var ufoTbody = d3.select("#ufo-tbody");
     ufoTbody.html("");
     list.forEach(ufo => {
